@@ -76,7 +76,7 @@ $ getMsg_work2接收消息：8
 $ node startPub.js -f sendMsg_pubSub
 $ SendMsg_pubSub发布消息：1
 $ SendMsg_pubSub发布消息：2
-$ SendMsg_pubSubg发布消息：3
+$ SendMsg_pubSub发布消息：3
 $ SendMsg_pubSub发布消息：4
 
 ```

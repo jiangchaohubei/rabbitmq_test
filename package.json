@@ -1,0 +1,36 @@
+{
+  "name": "baseproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ClassA.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development node index.js",
+    "build": "webpack -p --config ./webpack.server.config.prod.js  --progress",
+    "clean": "rm -rf build "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "babel-plugin-transform-async-to-module-method": "^6.24.1",
+    "babel-runtime": "^6.26.0",
+    "class2api": "^2.5.18",
+    "commander": "^2.15.1",
+    "cross-env": "^5.1.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-plugin-module-resolver": "^3.1.0",
+    "babel-plugin-transform-es2015-parameters": "^6.24.1",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.0.16",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0"
+  }
+}

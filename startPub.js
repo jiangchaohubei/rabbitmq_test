@@ -25,7 +25,7 @@ const sendMsg_work= async ()=>{
         persistent: true
     });
     await channel.close();
-    await connection.close();
+    //await connection.close();
 
     console.log(`SendMsg_work发布消息：${message}`)
 }
@@ -44,7 +44,7 @@ const sendMsg_pubSub= async ()=>{
     await channel.assertExchange(ex,"fanout")
     await channel.publish(ex,"",new Buffer(`${message}`))
     await channel.close();
-    await connection.close();
+    //await connection.close();
 
     console.log(`sendMsg_pubSub发布消息：${message}`)
 }
@@ -63,7 +63,7 @@ const sendMsg_routing= async ()=>{
     await channel.assertExchange(ex,"direct")
     await channel.publish(ex,"rout",new Buffer(`${message}`))
     await channel.close();
-    await connection.close();
+    //await connection.close();
 
     console.log(`sendMsg_routing发布消息：${message}`)
 }
@@ -84,7 +84,7 @@ const sendMsg_topic= async ()=>{
     await channel.publish(ex,"abb.c.df",new Buffer(`${message}`))
     await channel.publish(ex,"abb.d.bg",new Buffer(`${message}`))
     await channel.close();
-    await connection.close();
+    //await connection.close();
 
     console.log(`sendMsg_topic发布消息：${message}`)
 }

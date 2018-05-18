@@ -22,7 +22,11 @@ $ sudo apt-get install docker.io
 # 测试5种策略模式
 npm install
 
+
 # 简单模式
+<p align="center">
+  <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/be4c9d7c36474b50a4cb5471dfd93bfa.png" alt="woke" >
+</p>
 - 消息发布到队列，接受者监听该队列后，该队列将一直处于监听状态，除非手动关闭，自动接收消息
 - 同时启动两个终端：
 - 发布者startPub.js：

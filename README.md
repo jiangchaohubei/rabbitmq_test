@@ -8,19 +8,36 @@ $ brew cask install docker
 $ sudo apt-get update
 $ sudo apt-get install docker.io
 ```
-# 拉取带web管理界面的镜像
-- $ docker pull rabbitmq:management
-- $ docker images
+# 配置镜像加速
+- mac:
+- 点击mac右上角菜单栏docker鲸鱼图标 -> Preferences -> Daemon -> 两个都添加 https://registry.docker-cn.com
+- ubuntu:
+- 编辑 vi /etc/docker/daemon.json，没有就创建一个：
+```
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+```
 
-# share 文件夹/data给docker，创建映射文件夹/data/rabbitmq-data
-图标菜单menu -> Preferences -> File sharing
+# 拉取rabbitmq带web管理界面的镜像
+```
+$ docker pull rabbitmq:management
+$ docker images
+```
+
+# 创建映射文件夹并share给docker
+- 创建映射文件夹/data/rabbitmq-data
+- 点击mac右上角菜单栏docker鲸鱼图标 -> Preferences -> File sharing -> 添加/data
+  
 
 # 创建容器运行
-- $ docker run -d --name rabbitmq_web  --publish 5671:5671 --publish 5672:5672 --publish 4369:4369 --publish 25672:25672 --publish 15671:15671 --publish 15672:15672 -v /data/rabbitmq-data/:/var/rabbitmq/lib rabbitmq:management
+```
+$ docker run -d --name rabbitmq_web  --publish 5671:5671 --publish 5672:5672 --publish 4369:4369 --publish 25672:25672 --publish 15671:15671 --publish 15672:15672 -v /data/rabbitmq-data/:/var/rabbitmq/lib rabbitmq:management
+```
 - 访问http://localhost:15672   guest:guest
 
 # 测试5种策略模式
-npm install
+- pull本项目后执行 npm install
 
 
 # 简单模式

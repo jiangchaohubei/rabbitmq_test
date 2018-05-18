@@ -16,10 +16,11 @@ let connection ;
  *   一个任务只会执行一次
  */
 const getMsg_work= async ()=>{
-
+    console.log("【简单模式与工作队列模式】监听workQueue队列，接收其中未被处理的消息")
     const queue="workQueue"
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
+    //监听队列"workQueue"
     await channel.consume(queue, function(message) {
         console.log(`getMsg_work1接收消息：${message.content.toString()}`);
         //消息回执，通知queue消息已经处理，可以删除了
@@ -34,12 +35,13 @@ const getMsg_work= async ()=>{
  * exchange的类型fanout,路由（routingKey）为""就行
  */
 const getMsg_pubSub= async ()=>{
-
+    console.log("【发布订阅模式】绑定pubSubQueue队列与交换机pubSubExchange，并监听该队列，能接收订阅(监听)后的消息")
     const queue="pubSubQueue"
     const ex="pubSubExchange"
 
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
+    //绑定队列与startPub(发布者)中的交换机
     await channel.bindQueue(queue,ex)
     await channel.consume(queue, function(message) {
         console.log(`getMsg_pubSub1接收消息：${message.content.toString()}`);
@@ -54,12 +56,13 @@ const getMsg_pubSub= async ()=>{
  * exchange的类型direct
  */
 const getMsg_routing= async ()=>{
-
+    console.log("【路由模式】绑定routingQueue队列与交换机routingExchange，绑定路由rout等于推送路由rout，能接收订阅(监听)后的消息")
     const queue="routingQueue"
     const ex="routingExchange"
 
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
+    //绑定队列与startPub(发布者)中的交换机，绑定路由为"rout"
     await channel.bindQueue(queue,ex,"rout")
     await channel.consume(queue, function(message) {
         console.log(`getMsg_routing1接收消息：${message.content.toString()}`);
@@ -74,12 +77,13 @@ const getMsg_routing= async ()=>{
  * exchange的类型topic
  */
 const getMsg_topic= async ()=>{
-
+    console.log("【通配符模式】绑定topicQueue队列与交换机topicExchange，绑定路由abb.#,能匹配以abb.开头的所有路由，此处一次能接收三条相同消息")
     const queue="topicQueue"
     const ex="topicExchange"
 
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
+    //绑定队列与startPub(发布者)中的交换机，绑定路由为"abb.#"，能匹配已abb.开头的所有路由
     await channel.bindQueue(queue,ex,"abb.#")
     await channel.consume(queue, function(message) {
         console.log(`getMsg_topic1接收消息：${message.content.toString()}`);

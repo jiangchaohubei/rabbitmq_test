@@ -14,7 +14,7 @@ let connection ;
  *   一个任务只会执行一次
  */
 const getMsg_work= async ()=>{
-
+    console.log("【简单模式与工作队列模式】监听workQueue队列，接收其中未被处理的消息，与startRec1平分任务")
     const queue="workQueue"
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
@@ -31,7 +31,7 @@ const getMsg_work= async ()=>{
  * exchange的类型fanout,路由（routingKey）为""就行
  */
 const getMsg_pubSub= async ()=>{
-
+    console.log("【发布订阅模式】绑定pubSubQueue2队列与交换机pubSubExchange，并监听该队列，能接订阅后收未处理的消息，与startRec1同步接收消息")
     const queue="pubSubQueue2"
     const ex="pubSubExchange"
 
@@ -51,7 +51,7 @@ const getMsg_pubSub= async ()=>{
  * exchange的类型direct
  */
 const getMsg_routing= async ()=>{
-
+    console.log('【路由模式】绑定routingQueue2队列与交换机routingExchange，绑定路由""不匹配推送路由rout，不能接收消息')
     const queue="routingQueue2"
     const ex="routingExchange"
 
@@ -71,7 +71,7 @@ const getMsg_routing= async ()=>{
  * exchange的类型topic
  */
 const getMsg_topic= async ()=>{
-
+    console.log("【通配符模式】绑定topicQueue2队列与交换机topicExchange，绑定路由*.b.#,能匹配以b在中间，前面一个单词后面n个单词的所有路由，此处一次能接收1条消息")
     const queue="topicQueue2"
     const ex="topicExchange"
 

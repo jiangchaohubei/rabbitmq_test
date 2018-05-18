@@ -19,13 +19,16 @@ const sendMsg_work= async ()=>{
 
     const queue="workQueue";
     const message=++count
-
+    //创建通道（消息都用通道来推送给队列或交换机）
     const channel = await connection.createChannel();
+    //创建队列
     await channel.assertQueue(queue);
+    //推送消息到队列"workQueue"
     await channel.sendToQueue(queue, new Buffer(`${message}`), {
         // RabbitMQ关闭时，消息会被保存到磁盘
         persistent: true
     });
+    //关闭通道
     await channel.close();
     //await connection.close();
 
@@ -42,7 +45,9 @@ const sendMsg_pubSub= async ()=>{
     const ex="pubSubExchange"
     const message=++count
     const channel = await connection.createChannel();
+    //创建交换机，fanout模式没有路由
     await channel.assertExchange(ex,"fanout")
+    //消息推送到交换机
     await channel.publish(ex,"",new Buffer(`${message}`))
     await channel.close();
     //await connection.close();
@@ -60,7 +65,9 @@ const sendMsg_routing= async ()=>{
     const ex="routingExchange"
     const message=++count
     const channel = await connection.createChannel();
+    //创建交换机，direct模式完全匹配推送路由与绑定路由
     await channel.assertExchange(ex,"direct")
+    //消息推送到交换机，推送路由为"rout"
     await channel.publish(ex,"rout",new Buffer(`${message}`))
     await channel.close();
     //await connection.close();
@@ -78,7 +85,9 @@ const sendMsg_topic= async ()=>{
     const ex="topicExchange"
     const message=++count
     const channel = await connection.createChannel();
+    //创建交换机，topic模式根据通配符模糊匹配推送路由与绑定路由
     await channel.assertExchange(ex,"topic")
+    //推送了3中路由的消息到交换机
     await channel.publish(ex,"abb.b.fg",new Buffer(`${message}`))
     await channel.publish(ex,"abb.c.df",new Buffer(`${message}`))
     await channel.publish(ex,"abb.d.bg",new Buffer(`${message}`))
@@ -93,9 +102,10 @@ const sendMsg_topic= async ()=>{
 (()=>{
     setInterval(async function(){
         if(!connection){
+            //创建rabbitmq连接
             connection=await amqp.connect(amqpUrl)
         }
-
+        //执行命令行传入的方法
         await eval(`${program.func}()`)
 
     },2000);

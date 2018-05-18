@@ -24,7 +24,7 @@ npm install
 
 
 # 简单模式
-  <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/be4c9d7c36474b50a4cb5471dfd93bfa.png" alt="woke" >
+- <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/199a85de82bd444cad58e0204f700a54.png" alt="woke" >
 - 消息发布到队列，接受者监听该队列后，该队列将一直处于监听状态，除非手动关闭，自动接收消息
 - 同时启动两个终端：
 - 发布者startPub.js：
@@ -45,6 +45,7 @@ $ getMsg_work1接收消息：4
 ```
 
 # 工作队列模式
+- <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/f081b7b5a6d24c9b8097ae5d5ad5da6a.png" alt="woke" >
 - 发布一条消息，只有一个receiver接收到消息，发布两条，分别接收到一条消息
 - 多个消费者时交替执行队列中任务，每个消费者执行任务多少取决于其消费能力，一个任务只会被执行一次
 - 可尝试多次发送消息，查看两个消费者交替执行任务,可在消费者内加入延时函数模拟消费能力不同
@@ -79,6 +80,7 @@ $ getMsg_work2接收消息：6
 $ getMsg_work2接收消息：8
 ```
 # 发布订阅模式
+- <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/28caa49d28f648568aff1983a06e7876.png" alt="woke" >
 - 发布一条消息，两个receiver同时接收到消息(只要各自队列绑定到同一个交换机，就都能接收到消息）
 - 发布者先把消息推送到交换机（exchange）中,当有队列与该交换机绑定时，再将消息推送到该队列中；
 - 因此该模式只有订阅（即绑定队列和交换机）后才能收到消息，订阅之前的消息都不会收到
@@ -110,6 +112,7 @@ $ getMsg_pubSub2接收消息：4
 ```
 
 # 路由模式
+- <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/440a53ec8ef645fabfbb7eef39866284.png" alt="woke" >
 - 发布消息，路由绑定为 "rout"  ,只有startRec1能接收到消息，尝试修改receiver2的getMsg_routing中的绑定路由为发布路由"rout",
 - 再次启动startRec2调用getMsg_routing方法，发现都能接收到任务消息
 - 路由需要完全匹配
@@ -138,6 +141,7 @@ $ node startRec2.js -f getMsg_routing
 ```
 
 # 通配符模式
+- <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/9c2ae9d3e84d4c6dbf6200e4c18f9f96.png" alt="woke" >
 - 同路由模式，只是路由不是完全匹配，而是根据通配符匹配，路由由 "." 分隔，"*"匹配零到一个单词，"#"匹配零到多个单词，
 - 调用一次接口，代码中已发布三条消息，分别为三个路由: abb.b.fg    abb.c.df   abb.d.bg
 - startRec1 的通配符路由为："abb.#"  ，因此能接收到所有以 abb开头的路由 ，能接收3条消息

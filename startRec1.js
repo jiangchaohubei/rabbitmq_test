@@ -22,6 +22,7 @@ const getMsg_work= async ()=>{
     await channel.assertQueue(queue);
     await channel.consume(queue, function(message) {
         console.log(`getMsg_work1接收消息：${message.content.toString()}`);
+        //消息回执，通知queue消息已经处理，可以删除了
         channel.ack(message);
     });
 

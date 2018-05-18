@@ -38,7 +38,7 @@ $ docker run -d --name rabbitmq_web  --publish 5671:5671 --publish 5672:5672 --p
 
 # 测试5种策略模式
 - pull本项目后执行 npm install
-
+- 终端通过node 执行相关发布者或接收者js文件，通过-f 指定运行不同模式的方法
 
 # 简单模式
 - <img src="http://5b0988e595225.cdn.sohucs.com/images/20170824/199a85de82bd444cad58e0204f700a54.png" alt="woke" >

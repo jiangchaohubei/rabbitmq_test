@@ -6,6 +6,8 @@ program
     .parse(process.argv);
 
 const amqpUrl="amqp://localhost:5672"
+let connection ;
+
 let count=0
 
 
@@ -17,7 +19,7 @@ const sendMsg_work= async ()=>{
 
     const queue="workQueue";
     const message=++count
-    const connection = await amqp.connect(amqpUrl);
+
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.sendToQueue(queue, new Buffer(`${message}`), {
@@ -39,7 +41,6 @@ const sendMsg_pubSub= async ()=>{
 
     const ex="pubSubExchange"
     const message=++count
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertExchange(ex,"fanout")
     await channel.publish(ex,"",new Buffer(`${message}`))
@@ -58,7 +59,6 @@ const sendMsg_routing= async ()=>{
 
     const ex="routingExchange"
     const message=++count
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertExchange(ex,"direct")
     await channel.publish(ex,"rout",new Buffer(`${message}`))
@@ -77,7 +77,6 @@ const sendMsg_topic= async ()=>{
 
     const ex="topicExchange"
     const message=++count
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertExchange(ex,"topic")
     await channel.publish(ex,"abb.b.fg",new Buffer(`${message}`))
@@ -93,8 +92,11 @@ const sendMsg_topic= async ()=>{
 
 (()=>{
     setInterval(async function(){
+        if(!connection){
+            connection=await amqp.connect(amqpUrl)
+        }
 
-            await eval(`${program.func}()`)
+        await eval(`${program.func}()`)
 
     },2000);
 })();

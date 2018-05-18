@@ -6,7 +6,7 @@ program
     .parse(process.argv);
 
 const amqpUrl="amqp://localhost:5672"
-
+let connection ;
 
 
 /**  简单模式与工作队列模式(取决于连接这个队列的消费者数量)
@@ -16,7 +16,6 @@ const amqpUrl="amqp://localhost:5672"
 const getMsg_work= async ()=>{
 
     const queue="workQueue"
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.consume(queue, function(message) {
@@ -36,7 +35,6 @@ const getMsg_pubSub= async ()=>{
     const queue="pubSubQueue2"
     const ex="pubSubExchange"
 
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.bindQueue(queue,ex)
@@ -57,7 +55,6 @@ const getMsg_routing= async ()=>{
     const queue="routingQueue2"
     const ex="routingExchange"
 
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.bindQueue(queue,ex,"")
@@ -78,7 +75,6 @@ const getMsg_topic= async ()=>{
     const queue="topicQueue2"
     const ex="topicExchange"
 
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.bindQueue(queue,ex,"*.b.#")
@@ -89,6 +85,10 @@ const getMsg_topic= async ()=>{
 }
 
 (async ()=>{
+    if(!connection){
+        connection=await amqp.connect(amqpUrl)
+    }
+
     await eval(`${program.func}()`)
 
 })()

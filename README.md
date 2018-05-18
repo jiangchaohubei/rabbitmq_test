@@ -1,3 +1,13 @@
+# docker安装
+- mac:
+```
+$ brew cask install docker
+```
+- ubuntu:
+```
+$ sudo apt-get update
+$ sudo apt-get install docker.io
+```
 # 拉取带web管理界面的镜像
 - $ docker pull rabbitmq:management
 - $ docker images

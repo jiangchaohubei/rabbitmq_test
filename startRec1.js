@@ -6,6 +6,8 @@ program
     .parse(process.argv);
 
 const amqpUrl="amqp://localhost:5672"
+let connection ;
+
 
 
 
@@ -16,7 +18,6 @@ const amqpUrl="amqp://localhost:5672"
 const getMsg_work= async ()=>{
 
     const queue="workQueue"
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.consume(queue, function(message) {
@@ -36,7 +37,6 @@ const getMsg_pubSub= async ()=>{
     const queue="pubSubQueue"
     const ex="pubSubExchange"
 
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.bindQueue(queue,ex)
@@ -57,7 +57,6 @@ const getMsg_routing= async ()=>{
     const queue="routingQueue"
     const ex="routingExchange"
 
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.bindQueue(queue,ex,"rout")
@@ -78,7 +77,6 @@ const getMsg_topic= async ()=>{
     const queue="topicQueue"
     const ex="topicExchange"
 
-    const connection = await amqp.connect(amqpUrl);
     const channel = await connection.createChannel();
     await channel.assertQueue(queue);
     await channel.bindQueue(queue,ex,"abb.#")
@@ -89,6 +87,10 @@ const getMsg_topic= async ()=>{
 }
 
 (async ()=>{
+    if(!connection){
+        connection=await amqp.connect(amqpUrl)
+    }
+
     await eval(`${program.func}()`)
 
 })()

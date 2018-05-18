@@ -26,7 +26,7 @@ $ docker images
 ```
 
 # 创建映射文件夹并share给docker
-- 创建映射文件夹/data/rabbitmq-data
+- 创建映射文件夹/data/rabbitmq-data
 - 点击mac右上角菜单栏docker鲸鱼图标 -> Preferences -> File sharing -> 添加/data
   
 

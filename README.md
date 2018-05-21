@@ -203,3 +203,4 @@ $ getMsg_topic2接收消息：4
 # 相关网址
 - rabbitmq最简单全面指南：http://www.sohu.com/a/166950443_411876
 - amqplib API文档：http://www.squaremobius.net/amqp.node/channel_api.html#channel_sendToQueue
+- 消息队列的使用场景： https://www.zhihu.com/question/34243607
